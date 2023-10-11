@@ -1,0 +1,42 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="container">
+        <a href="{% url 'create_user' %}" class="btn btn-primary btn-top-right"><i class="fa fa-plus" aria-hidden="true"></i> Add User</a>
+    </div>
+    <table class="table table-hover">
+    <thead>
+    <tr>
+        <th>SL.</th>
+        <th>Username</th>
+        <th>PIN</th>
+        <th>Full name</th>
+        <th>Role</th>
+        <th>Head Of Sales</th>
+        <th>update</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+    <tr>
+    <td>{{ forloop.counter }}</td>
+
+    <td>{{ user }} </td>
+    <td>{{ user.pin }}</td>
+    <td>{{ user.full_name }}</td>
+    <td>{{ user.role_type }}</td>
+    <td>{{ user.head_of_sales }}</td>
+    <td><a href="{% url 'update_user_info' user_id=user.id%}">Update</a> </td>
+
+    </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+
+{% endblock content %}

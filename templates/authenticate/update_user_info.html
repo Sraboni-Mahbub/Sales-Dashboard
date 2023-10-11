@@ -1,0 +1,67 @@
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+<div class="row gutters">
+<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+<div class="card h-100">
+	<div class="card-body">
+		<div class="account-settings text-center">
+			<div class="user-profile">
+				<div class="user-avatar">
+					<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin" class="rounded-circle img-thumbnail" style="max-width: 190px;">
+				</div>
+			</div>
+			<div class="user-information-2 p-4" style="margin-top: 50px; padding-top: 20px">
+				<h3 class="user-name" style="font-size: 24px;">{{ user_profile.user.username }}</h3>
+				<h4 class="user-fullname" style="font-size: 24; color: grey;">{{ user_profile.full_name }}</h4>
+				<h5 class="user-email" style="font-size: 14px; color: grey;">Email: {{ user_profile.user.email }}</h5>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+<div class="card h-100">
+	<div class="card-body">
+		<div class="row gutters">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<h6 class="mb-2 text-primary">Personal Details</h6>
+			</div>
+			<form method="post" class="form">
+				{% csrf_token %}
+				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+					<div class="form-group">
+						<label for="full_name">Full Name:</label>
+    					<input type="text" id="full_name" name="full_name" value="{{ user_profile.full_name }}"><br>
+					</div>
+				</div>
+				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+					<div class="form-group">
+						<label for="job_title">Job Title:</label>
+    					<input type="text" id="job_title" name="job_title" value="{{ user_profile.job_title }}"><br>
+					</div>
+				</div>
+				<label for="role_type">Role Type:</label>
+				<select id="role_type" name="role_type">
+					{% for choice in user_profile.role_choices %}
+						<option value="{{ choice.0 }}" {% if choice.0 == user_profile.role_type %}selected{% endif %}>
+							{{ choice.1 }}
+						</option>
+					{% endfor %}
+    			</select><br>
+				<div class="row gutters">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<div class="text-right">
+							<button type="submit" class="btn btn-primary">Update</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
