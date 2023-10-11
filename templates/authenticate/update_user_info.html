@@ -35,21 +35,23 @@
 						<label for="full_name">Full Name:</label>
     					<input type="text" id="full_name" name="full_name" value="{{ user_profile.full_name }}"><br>
 					</div>
-				</div>
-				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 					<div class="form-group">
 						<label for="job_title">Job Title:</label>
     					<input type="text" id="job_title" name="job_title" value="{{ user_profile.job_title }}"><br>
 					</div>
 				</div>
-				<label for="role_type">Role Type:</label>
-				<select id="role_type" name="role_type">
-					{% for choice in user_profile.role_choices %}
-						<option value="{{ choice.0 }}" {% if choice.0 == user_profile.role_type %}selected{% endif %}>
-							{{ choice.1 }}
-						</option>
-					{% endfor %}
-    			</select><br>
+				<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+					<div class="form-group">
+						<label for="role_type">Role Type:</label>
+						<select id="role_type" name="role_type">
+							{% for choice in user_profile.role_choices %}
+								<option value="{{ choice.0 }}" {% if choice.0 == user_profile.role_type %}selected{% endif %}>
+									{{ choice.1 }}
+								</option>
+							{% endfor %}
+						</select><br>
+					</div>
+				</div>
 				<div class="row gutters">
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<div class="text-right">
