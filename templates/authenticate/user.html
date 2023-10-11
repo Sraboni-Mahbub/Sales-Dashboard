@@ -19,6 +19,7 @@
         <th>Role</th>
         <th>Head Of Sales</th>
         <th>update</th>
+        <th>View</th>
     </tr>
     </thead>
     <tbody>
@@ -32,6 +33,7 @@
     <td>{{ user.role_type }}</td>
     <td>{{ user.head_of_sales }}</td>
     <td><a href="{% url 'update_user_info' user_id=user.id%}">Update</a> </td>
+    <td><a href="{% url 'view_user' user_id=user.id%}" ><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
 
     </tr>
         {% endfor %}

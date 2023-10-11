@@ -90,6 +90,12 @@ def update_user_info(request, user_id):
         return redirect('user')
     return render(request, "authenticate/update_user_info.html",{'user_profile': user_profile})
 
+@login_required(login_url='/authenticate/login/')
+def view_user(request, user_id):
+    user_profile = UserProfile.objects.get(pk=user_id)
+    return render(request, "authenticate/view_user.html", {'user_profile': user_profile})
+
+
 
 @login_required(login_url='/authenticate/login/')
 def logoutUser(request):
