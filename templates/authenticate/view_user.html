@@ -1,10 +1,10 @@
 {% extends 'layout/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container">
+<div class="container" xmlns="http://www.w3.org/1999/html">
 <div class="row gutters">
 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-<div class="card h-100">
+	<div class="card h-100">
 	<div class="card-body">
 		<div class="account-settings text-center">
 			<div class="user-profile">
@@ -24,16 +24,32 @@
 <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
 <div class="card h-100">
 	<div class="card-body">
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h6 class="mb-2 text-primary">Personal Details</h6>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<h4 class="user-job" style="font-size: 24px;">Job Title: {{ user_profile.job_title }}</h4>
+		<div class="tab-content">
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+					<h4 class="mb-2 text-primary">Personal Details</h4>
 				</div>
-				<div class="form-group">
-					<h4 class="user-role" style="font-size: 24px;">Role: {{ user_profile.role_type }}</h4>
+				<div class="col-md-4 col-sm-4">
+					<h4 class="user-job mb-2"><strong>Job Title:</strong></h4>
+				</div>
+				<div class="col-md-4 col-sm-4" style="padding-bottom: 20px;">
+					<h4 class="user-job1 mb-2">{{ user_profile.job_title }}</h4>
+				</div>
+			</div>
+			<div class="row" style="padding-bottom: 5px;">
+				<div class="col-md-4 col-sm-4">
+					<h4 class="user-job mb-2" style="padding-bottom: 20px;"><strong>Role:</strong></h4>
+				</div>
+				<div class="col-md-4 col-sm-4" >
+					<h4 class="user-job1 mb-2" style="padding-bottom: 20px;">{{ user_profile.role_type }}</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-4">
+					<h4 class="user-job mb-4" style="padding-bottom: 20px;"><strong>Head of Sales:</strong></h4>
+				</div>
+				<div class="col-md-4 col-sm-4" >
+					<h4 class="user-job1 mb-2" style="padding-bottom: 20px;">{{ user_profile.head_of_sales }}</h4>
 				</div>
 			</div>
 		</div>
