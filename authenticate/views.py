@@ -96,6 +96,29 @@ def view_user(request, user_id):
     return render(request, "authenticate/view_user.html", {'user_profile': user_profile})
 
 
+@login_required(login_url='/authenticate/login/')
+def profile(request):
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+
+    return render(request, "authenticate/profile.html", {'user': user, 'user_profile': user_profile})
+
+
+@login_required(login_url='/authenticate/login/')
+def edit_profile(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        user_profile.full_name = request.POST.get('full_name')
+        user_profile.job_title = request.POST.get('job_title')
+        user_profile.role_type = request.POST.get('role_type')
+
+        user_profile.save()
+
+        return redirect('profile')
+
+    return render(request, "authenticate/edit_profile.html", {'user_profile': user_profile})
+
 
 @login_required(login_url='/authenticate/login/')
 def logoutUser(request):
