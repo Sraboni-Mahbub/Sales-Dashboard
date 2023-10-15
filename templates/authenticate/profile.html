@@ -1,26 +1,31 @@
 {% extends 'layout/base.html' %}
 
 {% block content %}
-
 <div class="container" xmlns="http://www.w3.org/1999/html">
 <div class="row gutters">
 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-	<div class="card h-100">
-	<div class="card-body">
-		<div class="account-settings text-center">
-			<div class="user-profile">
-				<div class="user-avatar">
-					<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin" class="rounded-circle img-thumbnail" style="max-width: 190px;">
-				</div>
-			</div>
-			<div class="user-information-2 p-4" style="margin-top: 50px; padding-top: 20px">
-				<h3 class="user-name" style="font-size: 24px;">{{ user_profile.user.username }}</h3>
-				<h4 class="user-fullname" style="font-size: 24; color: grey;">{{ user_profile.full_name }}</h4>
-				<h5 class="user-email" style="font-size: 14px; color: grey;">Email: {{ user_profile.user.email }}</h5>
-			</div>
-		</div>
-	</div>
-</div>
+    <div class="card h-100">
+        <div class="card-body">
+            <div class="account-settings text-center">
+                <div class="user-profile">
+                    <div class="user-avatar position-relative" style="border-radius: 25px; background-color: white;">
+                        <div class="d-inline-block">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin" class="rounded-circle img-thumbnail" style="max-width: 190px;">
+                        </div>
+                        <label for="image-upload" class="image-upload-icon btn btn-light rounded-circle position-absolute" style="bottom: -20px; right: 10px; cursor: pointer; border-radius: 2px;">
+                            <i class="fas fa-pencil-alt fa-sm" style="border-radius: 5px;"></i> <!-- Adjust the border-radius as needed -->
+                            <input type="file" id="image-upload" style="display: none;">
+                        </label>
+                    </div>
+                </div>
+                <div class="user-information-2 p-4" style="margin-top: 50px; padding-top: 20px;">
+                    <h3 class="user-name" style="font-size: 24px;">{{ user_profile.user.username }}</h3>
+                    <h4 class="user-fullname" style="font-size: 24; color: grey;">{{ user_profile.full_name }}</h4>
+                    <h5 class="user-email" style="font-size: 14px; color: grey;">Email: {{ user_profile.user.email }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
 <div class="card h-100">
