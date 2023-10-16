@@ -24,7 +24,7 @@ class UserProfile(models.Model):
 
     sales_category = models.ForeignKey(SalesCategory, on_delete=models.SET_NULL, related_name="sales_category",
                                        blank=True, null=True)
-
+    profile_picture = models.ImageField(upload_to='profile_picture/', blank=True, null=True)
     def __str__(self):
          return self.user.username
 

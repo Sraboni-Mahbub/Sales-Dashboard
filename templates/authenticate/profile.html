@@ -10,11 +10,11 @@
                 <div class="user-profile">
                     <div class="user-avatar position-relative" style="border-radius: 25px; background-color: white;">
                         <div class="d-inline-block">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin" class="rounded-circle img-thumbnail" style="max-width: 190px;">
+                            <img src="{{ user_profile.profile_picture.url }}" alt="{{ user_profile.user.username }}" class="rounded-circle img-thumbnail" style="max-width: 190px;">
                         </div>
                         <label for="image-upload" class="image-upload-icon btn btn-light rounded-circle position-absolute" style="bottom: -20px; right: 10px; cursor: pointer; border-radius: 2px;">
                             <i class="fas fa-pencil-alt fa-sm" style="border-radius: 5px;"></i> <!-- Adjust the border-radius as needed -->
-                            <input type="file" id="image-upload" style="display: none;">
+                            <input type="file" id="image-upload" style="display: none;" accept="image/*">
                         </label>
                     </div>
                 </div>

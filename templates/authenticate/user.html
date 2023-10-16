@@ -6,9 +6,14 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-    <div class="container">
-        <a href="{% url 'create_user' %}" class="btn btn-primary btn-top-right"><i class="fa fa-plus" aria-hidden="true"></i> Add User</a>
-    </div>
+    {% if request.user.user_profile.role_type == "HOS" %}
+        <div class="container">
+            <div class="text-center text-dark">
+                <h1>Salesperson List</h1>
+            </div>
+            <a href="{% url 'create_user' %}" class="btn btn-primary btn-top-right"><i class="fa fa-plus" aria-hidden="true"></i> Add User</a>
+        </div>`
+    {% endif %}
     <table class="table table-hover">
     <thead>
     <tr>
@@ -17,8 +22,10 @@
         <th>PIN</th>
         <th>Full name</th>
         <th>Role</th>
-        <th>Head Of Sales</th>
-        <th>update</th>
+        <th>Sales Category</th>
+        {% if request.user.user_profile.role_type == "HOS" %}
+            <th>update</th>
+        {% endif %}
         <th>View</th>
     </tr>
     </thead>
@@ -31,8 +38,10 @@
     <td>{{ user.pin }}</td>
     <td>{{ user.full_name }}</td>
     <td>{{ user.role_type }}</td>
-    <td>{{ user.head_of_sales }}</td>
-    <td><a href="{% url 'update_user_info' user_id=user.id%}"><i class="fa fa-edit"></i>   Update</a> </td>
+    <td>{{ user.sales_category }}</td>
+    {% if request.user.user_profile.role_type == "HOS" %}
+        <td><a href="{% url 'update_user_info' user_id=user.id%}"><i class="fa fa-edit"></i>   Update</a> </td>
+    {% endif %}
     <td><a href="{% url 'view_user' user_id=user.id%}" ><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
 
     </tr>

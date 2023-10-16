@@ -1,0 +1,77 @@
+{% extends 'layout/base.html' %}
+
+{% block stylesheets %}
+    <!-- Include Bootstrap CSS if not already included -->
+{% endblock stylesheets %}
+
+{% block content %}
+    {% if request.user.user_profile.role_type == "HOS" %}
+        <div class="container">
+            <div class="text-center text-dark">
+                <h1>Product List</h1>
+            </div>
+            <div class="text-right">
+                <!-- Button to trigger the modal -->
+                <a href="#" class="btn btn-primary btn-top-right" data-toggle="modal" data-target="#addCategoryModal">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    {% endif %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>SL.</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>view</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for products in products %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ products.p_name }}</td>
+                <td>{{ products.price }}</td>
+                <td><a href="#"><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Modal for adding a category -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryModalLabel">Add Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form method="post" class="form">
+                        {% csrf_token %}
+                         <div id="div_id_name" class="form-group">
+                            <div class="">
+                                <input type="text" placeholder="Product Name" id="p_name" class="textinput textInput select form-control" name="p_name" required>
+                            </div>
+                        </div>
+                        <div id="div_id_price" class="form-group">
+                            <div class="">
+                                <input type="text" placeholder="Price" id="price" class="textinput textInput select form-control" name="price" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

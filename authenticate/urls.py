@@ -1,5 +1,8 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
+
+from salesdashboard import settings
+
 from . import views
 
 urlpatterns = [
@@ -25,3 +28,6 @@ urlpatterns = [
          name="password_reset_complete"),
 
 ]
+
+
+
