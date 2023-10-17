@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from authenticate.models import UserProfile, SalesCategory
 from authenticate.forms import CreateNewUser, ProfilePictureForm
-from django.contrib import messages
+
 
 # Create your views here.
 
@@ -51,7 +51,7 @@ def Create_User(request):
 
             pin = request.POST['pin']
             if UserProfile.objects.filter(pin=pin).exists():
-                messages.error(request, 'PIN already exists')
+                messages.info(request, 'PIN already exists')
                 return redirect('create_user')
 
             user = User.objects.create_user(username=username, password=password, email=email)
@@ -61,7 +61,7 @@ def Create_User(request):
                 'user_id': user.id,
                 'full_name': request.POST['full_name'],
                 'job_title': request.POST['job_title'],
-                'pin': request.POST['pin'],
+                'pin': pin,
                 'role_type': request.POST['role_type'],
                 'sales_category_id': sales_category_id,
             }

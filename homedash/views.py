@@ -20,6 +20,7 @@ def sales_category(request):
         add_category = SalesCategory.objects.all()
         sales_category = SalesCategory.objects.annotate(product_count=models.Count('sales_category_products'))
 
+
         if request.method == 'POST':
             # add_category.type = request.POST.get('type')
             # add_category.save()
@@ -28,7 +29,9 @@ def sales_category(request):
             return redirect('sales_category')
 
 
-    return render(request, 'homedash/sales_category.html', {'sales_category': sales_category, 'add_category':add_category})
+    return render(request, 'homedash/sales_category.html',
+                  {'sales_category': sales_category,
+                   'add_category':add_category,})
 
 
 @login_required(login_url='/authenticate/login/')
@@ -51,12 +54,12 @@ def view_category(request, category_id):
 def view_user_category(request, category_id):
     sales_category = SalesCategory.objects.get(pk=category_id)
 
-
     user_profiles = UserProfile.objects.filter(sales_category=sales_category)
 
     context = {
         'sales_category': sales_category,
         'user_profiles': user_profiles,
+        'user_count': user_count
     }
 
     return render(request, 'homedash/view_user_category.html', context)

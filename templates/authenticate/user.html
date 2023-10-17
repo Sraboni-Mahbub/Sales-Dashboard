@@ -1,10 +1,5 @@
 {% extends 'layout/base.html' %}
 
-{% block title %} Dashboard {% endblock title %}
-
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
-
 {% block content %}
     {% if request.user.user_profile.role_type == "HOS" %}
         <div class="container">
@@ -23,6 +18,7 @@
         <th>Full name</th>
         <th>Role</th>
         <th>Sales Category</th>
+        <th>Job Title</th>
         {% if request.user.user_profile.role_type == "HOS" %}
             <th>update</th>
         {% endif %}
@@ -39,6 +35,7 @@
     <td>{{ user.full_name }}</td>
     <td>{{ user.role_type }}</td>
     <td>{{ user.sales_category }}</td>
+    <td>{{ user.job_title }}</td>
     {% if request.user.user_profile.role_type == "HOS" %}
         <td><a href="{% url 'update_user_info' user_id=user.id%}"><i class="fa fa-edit"></i>   Update</a> </td>
     {% endif %}

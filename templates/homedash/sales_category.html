@@ -25,7 +25,7 @@
             <th>Number of products</th>
             <th>view</th>
             <th>View Salesperson</th>
-        </tr>
+
         </thead>
         <tbody>
             {% for category in sales_category %}
@@ -35,6 +35,7 @@
                 <td>{{ category.product_count }}</td>
                 <td><a href="{% url 'view_category' category_id=category.id %}"><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
                 <td><a href="{% url 'view_user_category' category_id=category.id %}"><i class="fa fa-eye" aria-hidden="true"></i> salesperson</a></td>
+
             </tr>
             {% endfor %}
         </tbody>
