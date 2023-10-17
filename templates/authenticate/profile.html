@@ -9,9 +9,15 @@
 	<div class="card-body">
 		<div class="account-settings text-center">
 			<div class="user-profile">
-				<div class="user-avatar">
-					<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin" class="rounded-circle img-thumbnail" style="max-width: 190px;">
-				</div>
+				<label for="profile-picture-input">
+					<div class="profile-picture-container">
+						<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin" class="rounded-circle img-thumbnail">
+						<div class="overlay">
+							<i class="fas fa-camera camera-icon" style="border: 2px solid #fff; border-radius: 50%; padding: 5px;"></i>
+						</div>
+					</div>
+				</label>
+				<input type="file" id="profile-picture-input" style="display: none;" accept="image/*">
 			</div>
 			<div class="user-information-2 p-4" style="margin-top: 50px; padding-top: 20px">
 				<h3 class="user-name" style="font-size: 24px;">{{ user_profile.user.username }}</h3>

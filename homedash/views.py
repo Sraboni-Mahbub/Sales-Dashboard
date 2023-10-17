@@ -16,7 +16,7 @@ def home(request):
 @login_required(login_url='/authenticate/login/')
 def sales_category(request):
 
-    if request.user.user_profile.role_type == 'HOS':
+    if request.user.user_profile.role_type == 'HOS' or request.user.user_profile.role_type == 'CEO':
         add_category = SalesCategory.objects.all()
         sales_category = SalesCategory.objects.annotate(product_count=models.Count('sales_category_products'))
 
@@ -41,8 +41,8 @@ def view_category(request, category_id):
             'p_name' : request.POST.get('p_name'),
             'price' : request.POST.get('price'),
         }
-        Products.objects.create(**dict, sales_category=sales_category)
-        return redirect('view_category', category_id=category_id)
+        new_product = Products.objects.create(**dict, sales_category=sales_category)
+        return redirect('view_category', category_id=new_product.sales_category.pk)
 
     return render(request, 'homedash/view_category.html', {'sales_category': sales_category, 'products': products})
 
