@@ -5,7 +5,7 @@ from authenticate.models import UserProfile, SalesCategory
 
 
 class Products(models.Model):
-    sales_category = models.ForeignKey(SalesCategory, on_delete=models.CASCADE,  related_name="sales_category_products",
+    sales_category = models.ForeignKey(SalesCategory, on_delete=models.CASCADE, related_name="sales_category_products",
                                        blank=True, null=True)
     p_name = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -14,8 +14,8 @@ class Products(models.Model):
         return self.p_name
 
 class Sale(models.Model):
-    product = models.ManyToManyField(Products)
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    product = models.ManyToManyField(Products, related_name="sale_product")
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="user_profile")
     sale_value = models.DecimalField(max_digits=10, decimal_places=2)
     remarks = models.CharField(max_length=50)
     date = models.DateTimeField()

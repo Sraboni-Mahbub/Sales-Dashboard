@@ -11,7 +11,6 @@
                 <h1>Sales Category</h1>
             </div>
             <div class="text-right">
-                <!-- Button to trigger the modal -->
                 <a href="#" class="btn btn-primary btn-top-right" data-toggle="modal" data-target="#addCategoryModal">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                 </a>
@@ -25,6 +24,7 @@
             <th>Type</th>
             <th>Number of products</th>
             <th>view</th>
+            <th>View Salesperson</th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +34,7 @@
                 <td>{{ category.type }}</td>
                 <td>{{ category.product_count }}</td>
                 <td><a href="{% url 'view_category' category_id=category.id %}"><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
+                <td><a href="{% url 'view_user_category' category_id=category.id %}"><i class="fa fa-eye" aria-hidden="true"></i> salesperson</a></td>
             </tr>
             {% endfor %}
         </tbody>

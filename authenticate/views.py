@@ -1,15 +1,17 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.core.files.storage import default_storage
 from django.urls import reverse, reverse_lazy
 import os
+import logging
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from authenticate.models import UserProfile, SalesCategory
-from authenticate.forms import CreateNewUser, UserProfileForm
-
+from authenticate.forms import CreateNewUser, ProfilePictureForm
+from django.contrib import messages
 
 # Create your views here.
 
@@ -46,6 +48,11 @@ def Create_User(request):
             email = request.POST['email']
             username = request.POST['username']
             password = request.POST['password1']
+
+            pin = request.POST['pin']
+            if UserProfile.objects.filter(pin=pin).exists():
+                messages.error(request, 'PIN already exists')
+                return redirect('create_user')
 
             user = User.objects.create_user(username=username, password=password, email=email)
             user.save()
@@ -116,11 +123,28 @@ def profile(request):
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
 
-    if request.method == 'POST' and 'profile_picture' in request.FILES:
-        user_profile.profile_picture = request.FILES['profile_picture']
-        user_profile.save()
+    if request.method == 'POST':
+        form = ProfilePictureForm(request.POST, request.FILES, instance=user_profile)
 
-    return render(request, "authenticate/profile.html", {'user': user, 'user_profile': user_profile})
+        if form.is_valid():
+            # Check if there's an existing profile picture to remove
+            if user_profile.profile_picture:
+                # Remove the existing profile picture file
+                default_storage.delete(user_profile.profile_picture.name)
+
+            # Save the new profile picture
+            profile_picture = form.cleaned_data.get('profile_picture')
+            if profile_picture:
+                user_profile.profile_picture = profile_picture
+            else:
+                user_profile.profile_picture = None  # Clear the profile picture
+
+            user_profile.save()
+            return redirect('profile')  # Replace 'profile' with the URL name for the user's profile page
+    else:
+        form = ProfilePictureForm(instance=user_profile)
+
+    return render(request, "authenticate/profile.html", {'user': user, 'user_profile': user_profile, 'form': form})
 
 
 @login_required(login_url='/authenticate/login/')

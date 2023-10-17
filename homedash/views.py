@@ -46,3 +46,23 @@ def view_category(request, category_id):
 
     return render(request, 'homedash/view_category.html', {'sales_category': sales_category, 'products': products})
 
+
+@login_required(login_url='/authenticate/login/')
+def view_user_category(request, category_id):
+    sales_category = SalesCategory.objects.get(pk=category_id)
+
+
+    user_profiles = UserProfile.objects.filter(sales_category=sales_category)
+
+    context = {
+        'sales_category': sales_category,
+        'user_profiles': user_profiles,
+    }
+
+    return render(request, 'homedash/view_user_category.html', context)
+
+def add_sale(request):
+
+    return render(request, 'homedash/add_sale.html')
+
+

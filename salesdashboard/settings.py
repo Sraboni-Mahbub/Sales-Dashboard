@@ -23,9 +23,19 @@ SECRET_KEY = 'django-insecure-5br^_j(*4e8%x0o(1uo(s87b8$$pv)p8i&-ir7662!x15rn&zp
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+from pathlib import Path
+import os
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-secondary',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
 
 ALLOWED_HOSTS = []
-
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
@@ -152,4 +162,6 @@ GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
+
+
 

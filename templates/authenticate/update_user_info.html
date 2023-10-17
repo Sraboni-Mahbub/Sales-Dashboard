@@ -9,7 +9,11 @@
 		<div class="account-settings text-center">
 			<div class="user-profile">
 				<div class="user-avatar">
-					<img src="/media/{{ user_profile.profile_picture.url }}" alt="{{ user.username }}" class="rounded-circle img-thumbnail" style="max-width: 190px;">
+					{% if not user_profile.profile_picture %}
+						<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="{{ user_profile.user.username }}" class="rounded-circle img-thumbnail" style="max-width: 190px;">
+					{% else %}
+						<img src="{{ user_profile.profile_picture.url }}" alt="Maxwell Admin" class="rounded-circle img-thumbnail">
+					{% endif %}
 				</div>
 			</div>
 			<div class="user-information-2 p-4" style="margin-top: 50px; padding-top: 20px">

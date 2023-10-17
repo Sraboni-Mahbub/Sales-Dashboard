@@ -1,5 +1,5 @@
 {% extends 'layout/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="container" xmlns="http://www.w3.org/1999/html">
@@ -9,15 +9,19 @@
 	<div class="card-body">
 		<div class="account-settings text-center">
 			<div class="user-profile">
-				<label for="profile-picture-input">
+				<label for="profile_picture">
 					<div class="profile-picture-container">
-						<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin" class="rounded-circle img-thumbnail">
+						{% if not user_profile.profile_picture %}
+							<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="{{ user_profile.user.username }}" class="rounded-circle img-thumbnail" style="max-width: 190px;">
+						{% else %}
+							<img src="{{ user_profile.profile_picture.url }}" alt="{{ user_profile.user.username }}" class="rounded-circle img-thumbnail">
+						{% endif %}
 						<div class="overlay">
 							<i class="fas fa-camera camera-icon" style="border: 2px solid #fff; border-radius: 50%; padding: 5px;"></i>
 						</div>
 					</div>
 				</label>
-				<input type="file" id="profile-picture-input" style="display: none;" accept="image/*">
+				<input type="text" id="profile_picture" name="profile_picture" style="display: none;" accept="image/*" data-toggle="modal" data-target="#addCategoryModal">
 			</div>
 			<div class="user-information-2 p-4" style="margin-top: 50px; padding-top: 20px">
 				<h3 class="user-name" style="font-size: 24px;">{{ user_profile.user.username }}</h3>
@@ -28,6 +32,30 @@
 	</div>
 </div>
 </div>
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryModalLabel">Add Profile Picture</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form method="post" class="form" enctype="multipart/form-data">
+                        {% csrf_token %}
+						{{ form|crispy }}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
 <div class="card h-100">
 	<div class="card-body">

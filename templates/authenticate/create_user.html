@@ -51,8 +51,11 @@
                             {% endfor %}
                         </select>
                     </div>
-                </div>
+               </div>
                 <button type="submit" style="width: 100%" class="btn btn-primary">Create</button>
+                {% for message in messages %}
+                    <p id="messages" style="color:white">{{message}}</p>
+                {% endfor %}
                 </form>
             </div>
         </div>
