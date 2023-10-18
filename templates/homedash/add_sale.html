@@ -13,4 +13,41 @@
             </div>
         </div>
     {% endif %}
+
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel"> Add Sale</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="form">
+                    {% csrf_token %}
+                     <div id="div_id type" class="form-group">
+                        <div class="">
+                            <input type="text" placeholder="Products" id="products" class="textinput textInput select form-control" name="products" required>
+                        </div>
+                    </div>
+                    <div id="div_id item" class="form-group">
+                        <div class="">
+                            <input type="number" placeholder="Number of items sold" id="items" class="textinput textInput select form-control" name="items" required>
+                        </div>
+                    </div>
+                    <div id="div_id remark" class="form-group">
+                        <div class="">
+                            <input type="text" placeholder="Remarks" id="remarks" class="textinput textInput select form-control" name="remarks" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

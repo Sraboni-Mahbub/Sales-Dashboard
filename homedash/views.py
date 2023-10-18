@@ -59,12 +59,12 @@ def view_user_category(request, category_id):
     context = {
         'sales_category': sales_category,
         'user_profiles': user_profiles,
-        'user_count': user_count
     }
 
     return render(request, 'homedash/view_user_category.html', context)
 
 def add_sale(request):
+    sales = Sale.objects.all()
 
     return render(request, 'homedash/add_sale.html')
 

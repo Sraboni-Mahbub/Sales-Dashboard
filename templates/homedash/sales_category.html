@@ -22,9 +22,9 @@
         <tr>
             <th>SL.</th>
             <th>Type</th>
+            <th> </th>
             <th>Number of products</th>
             <th>view</th>
-            <th>View Salesperson</th>
 
         </thead>
         <tbody>
@@ -32,9 +32,9 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ category.type }}</td>
+                <td> </td>
                 <td>{{ category.product_count }}</td>
                 <td><a href="{% url 'view_category' category_id=category.id %}"><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
-                <td><a href="{% url 'view_user_category' category_id=category.id %}"><i class="fa fa-eye" aria-hidden="true"></i> salesperson</a></td>
 
             </tr>
             {% endfor %}
