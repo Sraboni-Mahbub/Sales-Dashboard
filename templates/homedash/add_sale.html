@@ -1,53 +1,43 @@
 {% extends 'layout/base.html' %}
 
 {% block content %}
-    {% if request.user.user_profile.role_type == "HOS" %}
-        <div class="container">
-            <div class="text-center text-dark">
-                <h1>Sales</h1>
-            </div>
-            <div class="text-right">
-                <a href="#" class="btn btn-primary btn-top-right" data-toggle="modal" data-target="#addCategoryModal">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                </a>
-            </div>
-        </div>
-    {% endif %}
-
-<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addCategoryModalLabel"> Add Sale</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post" class="form">
-                    {% csrf_token %}
-                     <div id="div_id type" class="form-group">
-                        <div class="">
-                            <input type="text" placeholder="Products" id="products" class="textinput textInput select form-control" name="products" required>
-                        </div>
+<center xmlns="http://www.w3.org/1999/html">
+    <div class="col-xl-8">
+        <div class="create_up">
+            <h3> Add Sale </h3>
+            <hr>
+            <form method="post" class="form">
+                {% csrf_token %}
+                <div id="div_id username" class="form-group">
+                    <div class="">
+                        <input type="text" placeholder="Username" id="username" class="textinput textInput select form-control" name="username" required>
                     </div>
-                    <div id="div_id item" class="form-group">
-                        <div class="">
-                            <input type="number" placeholder="Number of items sold" id="items" class="textinput textInput select form-control" name="items" required>
-                        </div>
+                </div>
+                 <div id="div_id products" class="form-group">
+                    <div class="">
+                        <input type="text" placeholder="Products ID" id="products" class="textinput textInput select form-control" name="products" required>
                     </div>
-                    <div id="div_id remark" class="form-group">
-                        <div class="">
-                            <input type="text" placeholder="Remarks" id="remarks" class="textinput textInput select form-control" name="remarks" required>
-                        </div>
+                </div>
+                <div id="div_id item" class="form-group">
+                    <div class="">
+                        <input type="text" placeholder="Sale Value" id="sale_value" class="textinput textInput select form-control" name="sale_value" required>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+                <div id="div_id remark" class="form-group">
+                    <div class="">
+                        <textarea id="remarks" placeholder="Remarks" name="remarks" class="textinput textInput select form-control" rows="3" required></textarea>
                     </div>
-                </form>
-            </div>
+                </div>
+                <div id="div_id dateTime" class="form-group">
+                    <div class="">
+                        <input type="datetime-local" placeholder="Date/Time" id="dateTime" class="textinput textInput select form-control" name="dateTime" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
+</center>
 {% endblock content %}

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
-
+from django.shortcuts import get_object_or_404
 from authenticate import models
 from authenticate.models import *
 from homedash.models import *
@@ -22,8 +22,6 @@ def sales_category(request):
 
 
         if request.method == 'POST':
-            # add_category.type = request.POST.get('type')
-            # add_category.save()
             sales_type = request.POST.get('type')
             SalesCategory.objects.create(type=sales_type)
             return redirect('sales_category')
@@ -34,6 +32,7 @@ def sales_category(request):
                    'add_category':add_category,})
 
 
+#Adding products here too
 @login_required(login_url='/authenticate/login/')
 def view_category(request, category_id):
     sales_category = SalesCategory.objects.get(pk=category_id)
@@ -65,7 +64,6 @@ def view_user_category(request, category_id):
 
 def add_sale(request):
     sales = Sale.objects.all()
-
     return render(request, 'homedash/add_sale.html')
 
 

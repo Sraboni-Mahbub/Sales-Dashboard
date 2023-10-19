@@ -4,7 +4,7 @@ from homedash.models import *
 
 
 class ProductsAdmin(admin.ModelAdmin):
-    list_display = ('p_name', 'sales_category', 'price')
+    list_display = ('id','p_name', 'sales_category', 'price')
 
 class SalesAdmin(admin.ModelAdmin):
     list_display = ('display_product_names', 'user_profile', 'sale_value', 'remarks', 'date')
