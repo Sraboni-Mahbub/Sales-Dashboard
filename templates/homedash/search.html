@@ -1,0 +1,87 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+{% if request.user.user_profile.role_type == "HOS" or request.user.user_profile.role_type == "CEO" %}
+    <div class="text-center text-dark">
+        <h1>Search</h1>
+    </div>
+    <form method="get">
+        <div class="input-group md-form form-sm form-1 pl-0" >
+            <div class="input-group-prepend">
+                <span class="input-group-text purple lighten-3" id="basic-text1">
+                    <i class="fas fa-search text-purple" aria-hidden="true"></i>
+                </span>
+            </div>
+            <input class="form-control my-0 py-1" type="text" id="username" name="username" placeholder="Search by username" aria-label="Search">
+
+            <div class="input-group-prepend" style="margin-left: 10px;">
+                <span class="input-group-text purple lighten-3" id="basic-text2">
+                    <i class="fas fa-search text-purple" aria-hidden="true"></i>
+                </span>
+            </div>
+            <input class="form-control my-0 py-1" type="text" id="product_id" name="product_id" placeholder="Search by products" aria-label="Search">
+
+            <div class="input-group-prepend" style="margin-left: 10px;">
+                <label class="input-group-text" for="start_date">
+                    Start
+                </label>
+            </div>
+            <input class="form-control my-0 py-1" type="date" id="start_date" name="start_date">
+
+            <div class="input-group-prepend" style="margin-left: 10px;">
+                <label class="input-group-text" for="end_date">
+                    End
+                </label>
+            </div>
+            <input class="form-control my-0 py-1" type="date" id="end_date" name="end_date">
+
+            <div class="input-group-prepend" style="margin-left: 10px;">
+                <label class="input-group-text" for="min_price">
+                    Min
+                </label>
+            </div>
+            <input class="form-control my-0 py-1" type="number" id="min_price" name="min_price" placeholder="Minimum Price">
+
+            <div class="input-group-prepend" style="margin-left: 10px;">
+                <label class="input-group-text" for="max_price">
+                    Max
+                </label>
+            </div>
+            <input class="form-control my-0 py-1" type="number" id="max_price" name="max_price" placeholder="Maximum Price">
+
+            <div class="input-group-prepend" style="margin-left: 10px;">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+    {% if results %}
+        <h3 class="mt-4">Search Results</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>User Profile</th>
+                    <th>Sale Value</th>
+                    <th>Remarks</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.product.product_id }}</td>
+                    <td>{{ result.user_profile }}</td>
+                    <td>{{ result.sale_value }}</td>
+                    <td>{{ result.remarks }}</td>
+                    <td>{{ result.date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No results found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+{% endif %}
+{% endblock content %}

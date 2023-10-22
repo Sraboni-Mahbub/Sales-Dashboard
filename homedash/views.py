@@ -1,8 +1,13 @@
+from datetime import timezone
+from django.db.models import Q
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+from datetime import datetime
 from authenticate import models
 from authenticate.models import *
 from homedash.models import *
@@ -63,7 +68,61 @@ def view_user_category(request, category_id):
     return render(request, 'homedash/view_user_category.html', context)
 
 def add_sale(request):
-    sales = Sale.objects.all()
-    return render(request, 'homedash/add_sale.html')
+    if request.method == 'POST':
 
+        product_ids = request.POST.getlist('product')
+        username = request.POST.get('username')
+        sale_value = request.POST.get('sale_value')
+        remarks = request.POST.get('remarks')
+
+
+        products = Products.objects.filter(id__in=product_ids)
+        user_profile = UserProfile.objects.get(user__username=username)
+
+
+        product_id_list = [str(product.id) for product in products]
+
+
+        new_sale = Sale.objects.create(
+            user_profile=user_profile,
+            sale_value=sale_value,
+            remarks=remarks,
+            date=datetime.now()
+        )
+
+        new_sale.product.set(products)
+
+        return redirect('add_sale')
+
+    else:
+        products = Products.objects.all()
+        user_profiles = UserProfile.objects.all()
+
+    return render(request, 'homedash/add_sale.html', {'products': products, 'user_profiles': user_profiles})
+
+def search(request):
+    if request.method == 'GET':
+        username = request.GET.get('username')
+        product_id = request.GET.get('product_id')
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+        min_price = request.GET.get('min_price')
+        max_price = request.GET.get('max_price')
+
+        query = Q()
+
+        if username:
+            query &= Q(user_profile__user__username=username)
+        if product_id:
+            query &= Q(product__id=product_id)
+        if start_date and end_date:
+            query &= Q(date__range=[start_date, end_date])
+        if min_price:
+            query &= Q(sale_value__gte=min_price)
+        if max_price:
+            query &= Q(sale_value__lte=max_price)
+
+        results = Sale.objects.filter(query)
+
+    return render(request, 'homedash/search.html', {'results': results})
 

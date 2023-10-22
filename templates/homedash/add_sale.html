@@ -13,9 +13,13 @@
                         <input type="text" placeholder="Username" id="username" class="textinput textInput select form-control" name="username" required>
                     </div>
                 </div>
-                 <div id="div_id products" class="form-group">
+                <div id="div_id_cs" class="form-group">
                     <div class="">
-                        <input type="text" placeholder="Products ID" id="products" class="textinput textInput select form-control" name="products" required>
+                        <select name="product" id="sales_category" class="textinput textInput select form-control">
+                            {% for product in products %}
+                                <option value="{{ product.id }}">{{ product.p_name }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div id="div_id item" class="form-group">
@@ -28,12 +32,7 @@
                         <textarea id="remarks" placeholder="Remarks" name="remarks" class="textinput textInput select form-control" rows="3" required></textarea>
                     </div>
                 </div>
-                <div id="div_id dateTime" class="form-group">
-                    <div class="">
-                        <input type="datetime-local" placeholder="Date/Time" id="dateTime" class="textinput textInput select form-control" name="dateTime" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
+                <div class="footer">
                     <button type="submit" class="btn btn-primary">Add</button>
                 </div>
             </form>
