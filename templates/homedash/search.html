@@ -59,7 +59,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Product</th>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
                     <th>User Profile</th>
                     <th>Sale Value</th>
                     <th>Remarks</th>
@@ -69,7 +70,10 @@
             <tbody>
                 {% for result in results %}
                 <tr>
-                    <td>{{ result.product.product_id }}</td>
+                    <td>{% for product_ids in result.product.all %}
+                    {{ product_ids.id }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}</td>
+                    <td>{{ result.product.all|join:", " }}</td>
                     <td>{{ result.user_profile }}</td>
                     <td>{{ result.sale_value }}</td>
                     <td>{{ result.remarks }}</td>

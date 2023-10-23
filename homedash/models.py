@@ -19,8 +19,8 @@ class Sale(models.Model):
     date = models.DateTimeField()
 
     def __str__(self):
-        product_names = ', '.join([product.p_name for product in self.product.all()])
-        return f"{product_names}"
+        product_ids = ', '.join([str(product.id) for product in self.product.all()])
+        return f"Product IDs: {product_ids}, Sale Value: {self.sale_value}, Remarks: {self.remarks}"
 
 class LogTable(models.Model):
     user = models.CharField(max_length=50)

@@ -15,11 +15,12 @@
                 </div>
                 <div id="div_id_cs" class="form-group">
                     <div class="">
-                        <select name="product" id="sales_category" class="textinput textInput select form-control">
+                         <label for="product">Select Products:</label>
+                          <select id="product" name="product" multiple class="form-control">
                             {% for product in products %}
-                                <option value="{{ product.id }}">{{ product.p_name }}</option>
+                              <option value="{{ product.id }}">{{ product.p_name }}</option>
                             {% endfor %}
-                        </select>
+                          </select>
                     </div>
                 </div>
                 <div id="div_id item" class="form-group">

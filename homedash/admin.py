@@ -7,14 +7,18 @@ class ProductsAdmin(admin.ModelAdmin):
     list_display = ('id','p_name', 'sales_category', 'price')
 
 class SalesAdmin(admin.ModelAdmin):
-    list_display = ('user_profile', 'product_ids', 'sale_value', 'date', 'remarks')
+    list_display = ('user_profile', 'product_ids', 'product_names', 'sale_value', 'remarks', 'date')
     list_filter = ('user_profile', 'date')
-    search_fields = ('user_profile__user__username', 'product__p_name')
+    search_fields = ('user_profile__user__username', 'product__p_name','product__id')  # Assuming 'p_name' is the product name field
 
     def product_ids(self, obj):
         return ', '.join([str(product.id) for product in obj.product.all()])
 
+    def product_names(self, obj):
+        return ', '.join([product.p_name for product in obj.product.all()])
+
     product_ids.short_description = 'Product IDs'
+    product_names.short_description = 'Product Names'
 class LogTableAdmin(admin.ModelAdmin):
     list_display = ('user', 'actions', 'results', 'dateTime', 'description')
 

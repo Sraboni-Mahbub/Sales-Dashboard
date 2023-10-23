@@ -67,21 +67,16 @@ def view_user_category(request, category_id):
 
     return render(request, 'homedash/view_user_category.html', context)
 
+@login_required(login_url='/authenticate/login/')
 def add_sale(request):
     if request.method == 'POST':
-
         product_ids = request.POST.getlist('product')
         username = request.POST.get('username')
         sale_value = request.POST.get('sale_value')
         remarks = request.POST.get('remarks')
 
-
-        products = Products.objects.filter(id__in=product_ids)
+        selected_products = Products.objects.filter(id__in=product_ids)
         user_profile = UserProfile.objects.get(user__username=username)
-
-
-        product_id_list = [str(product.id) for product in products]
-
 
         new_sale = Sale.objects.create(
             user_profile=user_profile,
@@ -90,7 +85,8 @@ def add_sale(request):
             date=datetime.now()
         )
 
-        new_sale.product.set(products)
+        new_sale.product.set(selected_products)
+
 
         return redirect('add_sale')
 
@@ -115,14 +111,16 @@ def search(request):
             query &= Q(user_profile__user__username=username)
         if product_id:
             query &= Q(product__id=product_id)
-        if start_date and end_date:
-            query &= Q(date__range=[start_date, end_date])
+        if start_date:
+            query &= Q(date__gte= start_date)
+        if end_date:
+            query &= Q(date__lte=end_date)
         if min_price:
             query &= Q(sale_value__gte=min_price)
         if max_price:
             query &= Q(sale_value__lte=max_price)
 
-        results = Sale.objects.filter(query)
+        results = Sale.objects.filter(query).order_by('-date')
 
     return render(request, 'homedash/search.html', {'results': results})
 
