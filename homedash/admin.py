@@ -22,8 +22,12 @@ class SalesAdmin(admin.ModelAdmin):
 class LogTableAdmin(admin.ModelAdmin):
     list_display = ('user', 'actions', 'results', 'dateTime', 'description')
 
+class InfoTableAdmin(admin.ModelAdmin):
+    list_display = ('fiscal_year', 'month', 'budget')
+
 
 admin.site.register(Products, ProductsAdmin)
 admin.site.register(Sale, SalesAdmin)
 admin.site.register(LogTable, LogTableAdmin)
+admin.site.register(InfoTable, InfoTableAdmin)
 

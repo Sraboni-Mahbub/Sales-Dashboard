@@ -32,3 +32,16 @@ class LogTable(models.Model):
     def __str__(self):
         return self.user
 
+
+class InfoTable(models.Model):
+    fiscal_year = models.PositiveIntegerField()
+    month = models.CharField(max_length=10,
+            choices=[("January", "January"), ("February", "February"), ("March", "March"),
+                     ("April", "April"), ("May", "May"), ("June", "June"),
+                     ("July", "July"), ("August", "August"), ("September", "September"),
+                     ("October", "October"),("November", "November"), ("December", "December")])
+    budget = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.month} {self.fiscal_year}"
+
