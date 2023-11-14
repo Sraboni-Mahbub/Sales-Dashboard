@@ -2,49 +2,96 @@
 
 {% block content %}
     {% if request.user.user_profile.role_type == "HOS" %}
-        <div class="container">
-            <div class="text-center text-dark">
-                <h1>Salesperson List</h1>
-            </div>
-            <a href="{% url 'create_user' %}" class="btn btn-primary btn-top-right"><i class="fa fa-plus" aria-hidden="true"></i> Add User</a>
+    <div class="container">
+        <div class="text-center text-dark">
+            <h1>Salesperson List</h1>
         </div>
-    {% endif %}
-    <table class="table table-hover">
-    <thead>
-    <tr>
-        <th>SL.</th>
-        <th>Username</th>
-        <th>PIN</th>
-        <th>Full name</th>
-        <th>Role</th>
-        <th>Sales Category</th>
-        <th>Job Title</th>
-        {% if request.user.user_profile.role_type == "HOS" %}
-            <th>update</th>
-        {% endif %}
-        <th>View</th>
-    </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-    <tr>
-    <td>{{ forloop.counter }}</td>
+        <a href="{% url 'create_user' %}" class="btn btn-primary btn-top-right"><i class="fa fa-plus" aria-hidden="true"></i> Add User</a>
+    </div>
+{% endif %}
 
-    <td>{{ user }} </td>
-    <td>{{ user.pin }}</td>
-    <td>{{ user.full_name }}</td>
-    <td>{{ user.role_type }}</td>
-    <td>{{ user.sales_category }}</td>
-    <td>{{ user.job_title }}</td>
-    {% if request.user.user_profile.role_type == "HOS" %}
-        <td><a href="{% url 'update_user_info' user_id=user.id%}"><i class="fa fa-edit"></i>   Update</a> </td>
-    {% endif %}
-    <td><a href="{% url 'view_user' user_id=user.id%}" ><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
+<form method="get">
+    <div class="input-group md-form form-sm form-1 pl-0">
+        <div class="col-md-4">
+            <input class="form-control my-2 py-2 mx-2" type="text" id="username" name="username" placeholder="Search by username" aria-label="Search" value="{{ request.GET.username }}">
+        </div>
+        <div class="input-group-prepend">
+            <button class="btn btn-primary my-2 py-2" type="submit">Search</button>
+        </div>
+    </div>
+</form>
 
-    </tr>
-        {% endfor %}
-    </tbody>
+{% if results %}
+    <h3 class="mt-4">Search Results</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SL.</th>
+                <th>Username</th>
+                <th>PIN</th>
+                <th>Full name</th>
+                <th>Role</th>
+                <th>Sales Category</th>
+                <th>Job Title</th>
+                {% if request.user.user_profile.role_type == "HOS" %}
+                    <th>Update</th>
+                {% endif %}
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in results %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user }}</td>
+                    <td>{{ user.pin }}</td>
+                    <td>{{ user.full_name }}</td>
+                    <td>{{ user.role_type }}</td>
+                    <td>{{ user.sales_category }}</td>
+                    <td>{{ user.job_title }}</td>
+                    {% if request.user.user_profile.role_type == "HOS" %}
+                        <td><a href="{% url 'update_user_info' user_id=user.id%}"><i class="fa fa-edit"></i> Update</a></td>
+                    {% endif %}
+                    <td><a href="{% url 'view_user' user_id=user.id%}"><i class="fa fa-eye" aria-hidden="true"></i> View</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
-
+{% else %}
+    <h3 class="mt-4">All Users</h3>
+    <table class="table">
+        <!-- Add table header here similar to the search results table -->
+        <thead>
+            <tr>
+                <th>SL.</th>
+                <th>Username</th>
+                <th>PIN</th>
+                <th>Full name</th>
+                <th>Role</th>
+                <th>Job Title</th>
+                {% if request.user.user_profile.role_type == "HOS" %}
+                    <th>Update</th>
+                {% endif %}
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user }}</td>
+                    <td>{{ user.pin }}</td>
+                    <td>{{ user.full_name }}</td>
+                    <td>{{ user.role_type }}</td>
+                    <td>{{ user.job_title }}</td>
+                    {% if request.user.user_profile.role_type == "HOS" %}
+                        <td><a href="{% url 'update_user_info' user_id=user.id%}"><i class="fa fa-edit"></i> Update</a></td>
+                    {% endif %}
+                    <td><a href="{% url 'view_user' user_id=user.id%}"><i class="fa fa-eye" aria-hidden="true"></i> View</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
 
 {% endblock content %}

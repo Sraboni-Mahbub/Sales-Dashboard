@@ -4,6 +4,7 @@ from django.core.files.storage import default_storage
 from django.urls import reverse, reverse_lazy
 import os
 import logging
+from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -56,20 +57,17 @@ def Create_User(request):
 
             user = User.objects.create_user(username=username, password=password, email=email)
             user.save()
-            sales_category_id = request.POST['sales_category']
             data_dict = {
                 'user_id': user.id,
                 'full_name': request.POST['full_name'],
                 'job_title': request.POST['job_title'],
                 'pin': pin,
                 'role_type': request.POST['role_type'],
-                'sales_category_id': sales_category_id,
             }
             UserProfile.objects.create(**data_dict, head_of_sales_id=request.user.id)
             return redirect('user')
-    sales_category = SalesCategory.objects.all()
 
-    return render(request, "authenticate/create_user.html", {'form': form, 'sales_category': sales_category})
+    return render(request, "authenticate/create_user.html", {'form': form})
 
 
 @login_required(login_url='/authenticate/login/')
@@ -84,10 +82,17 @@ def UserList(request):
     else:
         raise Http404('Access Denied')
 
+    if request.method == 'GET':
+        username = request.GET.get('username', '')
+        query = Q()
+        # Filter based on the 'user' field in UserProfile
+        query &= Q(user__username=username)
+        results = UserProfile.objects.filter(query)
 
     diction = {
         'title': 'User List',
-        'users': users
+        'users': users,
+        'results': results
     }
 
     return render(request, "authenticate/user.html", context=diction)
@@ -95,22 +100,21 @@ def UserList(request):
 @login_required(login_url='/authenticate/login/')
 def update_user_info(request, user_id):
     user_profile = UserProfile.objects.get(pk=user_id)
-    sales_category = SalesCategory.objects.all()
+
 
     if request.method == 'POST':
-        selected_sales_category_id = request.POST['sales_category']
 
         user_profile.full_name = request.POST.get('full_name')
         user_profile.job_title = request.POST.get('job_title')
         user_profile.role_type = request.POST.get('role_type')
-        user_profile.sales_category_id = selected_sales_category_id
+
 
         user_profile.save()
         user_email = user_profile.user.email
 
         return redirect('user')
 
-    return render(request, "authenticate/update_user_info.html",{'user_profile': user_profile, 'sales_category':sales_category})
+    return render(request, "authenticate/update_user_info.html",{'user_profile': user_profile})
 
 @login_required(login_url='/authenticate/login/')
 def view_user(request, user_id):

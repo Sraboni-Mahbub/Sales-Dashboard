@@ -42,16 +42,6 @@
                         </select>
                     </div>
                 </div>
-               <div id="div_id_cs" class="form-group">
-                    <div class="">
-                        <select name="sales_category" id="sales_category" class="textinput textInput select form-control">
-                            <option value="">----Type of Sales person----</option>
-                            {% for category in sales_category %}
-                                <option value="{{ category.id }}">{{ category.type }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-               </div>
                 <button type="submit" style="width: 100%" class="btn btn-primary">Create</button>
                 {% for message in messages %}
                     <p id="messages" style="color:white">{{message}}</p>

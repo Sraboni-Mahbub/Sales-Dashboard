@@ -24,7 +24,7 @@ class CreateNewUser(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('full_name', 'job_title', 'head_of_sales', 'role_type', 'sales_category')
+        fields = ('full_name', 'job_title', 'head_of_sales', 'role_type')
 
 class ProfilePictureForm(forms.ModelForm):
     class Meta:
