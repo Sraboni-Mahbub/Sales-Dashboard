@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from authenticate.models import UserProfile, SalesCategory
 
+
 class UserProfileAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'head_of_sales':

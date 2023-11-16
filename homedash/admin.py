@@ -9,7 +9,7 @@ class ProductsAdmin(admin.ModelAdmin):
 class SalesAdmin(admin.ModelAdmin):
     list_display = ('user_profile', 'product_ids', 'product_names', 'sale_value', 'remarks', 'date')
     list_filter = ('user_profile', 'date')
-    search_fields = ('user_profile__user__username', 'product__p_name','product__id')  # Assuming 'p_name' is the product name field
+    search_fields = ('user_profile__user__username', 'product__p_name','product__id')
 
     def product_ids(self, obj):
         return ', '.join([str(product.id) for product in obj.product.all()])

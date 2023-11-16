@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from authenticate.models import UserProfile, SalesCategory
+from authenticate.models import UserProfile
 from authenticate.forms import CreateNewUser, ProfilePictureForm
 
 

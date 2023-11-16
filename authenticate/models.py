@@ -7,6 +7,10 @@ class SalesCategory(models.Model):
     def __str__(self):
         return self.type
 
+    def delete(self, *args, **kwargs):
+        print(f"Deleting SalesCategory: {self.id}")
+        super().delete(*args, **kwargs)
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_profile")
     full_name = models.CharField(max_length=264, blank=True)

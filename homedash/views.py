@@ -162,8 +162,15 @@ def sales_category(request):
                   {'sales_category': sales_category,
                    'add_category': add_category, })
 
+@login_required(login_url='/authenticate/login/')
+def delete_sales_category(request, category_id):
+    print(SalesCategory.objects.get(pk=category_id))
 
-# Adding products here too
+    SalesCategory.objects.get(pk=category_id).delete()
+    return redirect('sales_category')
+
+
+
 @login_required(login_url='/authenticate/login/')
 def view_category(request, category_id):
     sales_category = SalesCategory.objects.get(pk=category_id)
