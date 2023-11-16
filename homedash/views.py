@@ -22,9 +22,29 @@ import locale
 from authenticate import models
 from authenticate.models import *
 from homedash.models import *
-
+from django.http import JsonResponse
 
 # Sales person chart
+def salesperson_chart(request):
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=30)
+
+    user_sales = Sale.objects.filter(date__range=(start_date, end_date)).values('user_profile__user__username').annotate(
+        total_sales=Sum('sale_value'))
+
+    user_sales_list = list(user_sales)
+
+    # for item in user_sales_list:
+    #     user_profile = UserProfile.objects.get(pk=item['user_profile'])
+    #     item['user_name'] = user_profile.user.username
+
+    response = JsonResponse(user_sales_list, safe=False)
+
+    content = response.content
+    print(content.decode('utf-8'))
+
+    return response
+
 
 def Salesperson_sale(request):
     user = request.user
@@ -129,9 +149,10 @@ def home(request):
     total_annual_sales_formatted = yearly_revenue()
     last_30_days_count, average_entries = number_of_sales()
     current_month_budget, total_budget = show_budget()
+    sales_chart = salesperson_chart(request)
+    print(sales_chart)
 
     month_list, monthly_sales_list_s = Salesperson_sale(request)
-
 
     context = {
         'total_sales_value': total_sales_value_formatted,
