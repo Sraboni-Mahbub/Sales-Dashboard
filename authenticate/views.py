@@ -77,7 +77,7 @@ def UserList(request):
         users = UserProfile.objects.filter(role_type='Salesperson', head_of_sales=hos_user)
 
     elif request.user.user_profile.role_type == 'CEO':
-        users = UserProfile.objects.all()
+        users = UserProfile.objects.exclude(role_type='CEO')
 
     else:
         raise Http404('Access Denied')
