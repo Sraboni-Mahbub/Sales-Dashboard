@@ -24,26 +24,28 @@ from authenticate.models import *
 from homedash.models import *
 from django.http import JsonResponse
 
+
 # Sales person chart
 def salesperson_chart(request):
     end_date = datetime.now()
     start_date = end_date - timedelta(days=30)
 
-    user_sales = Sale.objects.filter(date__range=(start_date, end_date)).values('user_profile__user__username').annotate(
-        total_sales=Sum('sale_value'))
+    user_sales = Sale.objects.filter(date__range=(start_date, end_date)).values(
+        'user_profile__full_name').annotate(
+        total_sales=Sum('sale_value')).order_by('user_profile__full_name')
 
     user_sales_list = list(user_sales)
+    salesperson_name_list = []
+    salesperson_value_list = []
+    for salesperson in user_sales_list:
+        salesperson_name_list.append(salesperson['user_profile__full_name'])
+        salesperson_value_list.append(int(salesperson['total_sales']))
 
     # for item in user_sales_list:
     #     user_profile = UserProfile.objects.get(pk=item['user_profile'])
     #     item['user_name'] = user_profile.user.username
 
-    response = JsonResponse(user_sales_list, safe=False)
-
-    content = response.content
-    print(content.decode('utf-8'))
-
-    return response
+    return salesperson_name_list, salesperson_value_list
 
 
 def Salesperson_sale(request):
@@ -149,8 +151,7 @@ def home(request):
     total_annual_sales_formatted = yearly_revenue()
     last_30_days_count, average_entries = number_of_sales()
     current_month_budget, total_budget = show_budget()
-    sales_chart = salesperson_chart(request)
-    print(sales_chart)
+    sales_person_name_list, sales_person_value_list = salesperson_chart(request)
 
     month_list, monthly_sales_list_s = Salesperson_sale(request)
 
@@ -162,7 +163,10 @@ def home(request):
         'current_month_budget': current_month_budget,
         'total_budget': total_budget,
         'prev_12_month': prev_12_month,
-        'monthly_sales_list': monthly_sales_list
+        'monthly_sales_list': monthly_sales_list,
+
+        'sales_person_name_list': sales_person_name_list,
+        "sales_person_value_list": sales_person_value_list
 
     }
     return render(request, 'homedash/index.html', context)
@@ -183,13 +187,13 @@ def sales_category(request):
                   {'sales_category': sales_category,
                    'add_category': add_category, })
 
+
 @login_required(login_url='/authenticate/login/')
 def delete_sales_category(request, category_id):
     print(SalesCategory.objects.get(pk=category_id))
 
     SalesCategory.objects.get(pk=category_id).delete()
     return redirect('sales_category')
-
 
 
 @login_required(login_url='/authenticate/login/')

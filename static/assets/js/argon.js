@@ -537,10 +537,10 @@ var BarsChart = (function() {
 		var ordersChart = new Chart($chart, {
 			type: 'bar',
 			data: {
-				labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				labels: sales_person_name_list,
 				datasets: [{
 					label: 'Sales',
-					data: [ 40, 60, 30, 17, 20, 50 ]
+					data: sales_person_value_list
 				}]
 			}
 		});
