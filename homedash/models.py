@@ -45,4 +45,3 @@ class InfoTable(models.Model):
 
     def __str__(self):
         return f"{self.month} {self.fiscal_year}"
-

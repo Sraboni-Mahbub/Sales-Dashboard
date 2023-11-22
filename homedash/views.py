@@ -160,9 +160,8 @@ def home(request):
         'total_budget': total_budget,
         'prev_12_month': prev_12_month,
         'monthly_sales_list': monthly_sales_list,
-
         'sales_person_name_list': sales_person_name_list,
-        "sales_person_value_list": sales_person_value_list
+        'sales_person_value_list': sales_person_value_list
 
     }
     return render(request, 'homedash/index.html', context)

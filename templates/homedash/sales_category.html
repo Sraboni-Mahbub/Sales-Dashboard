@@ -25,7 +25,6 @@
             <th> </th>
             <th>Number of products</th>
             <th>view</th>
-            <th>Action</th>
 
         </thead>
         <tbody>
@@ -36,7 +35,6 @@
                 <td> </td>
                 <td>{{ category.product_count }}</td>
                 <td><a href="{% url 'view_category' category_id=category.id %}"><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
-
             </tr>
             {% endfor %}
         </tbody>
@@ -73,5 +71,5 @@
             </div>
         </div>
     </div>
-    <!-- End of Modal -->
 {% endblock content %}
+
