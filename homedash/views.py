@@ -41,10 +41,6 @@ def salesperson_chart(request):
         salesperson_name_list.append(salesperson['user_profile__full_name'])
         salesperson_value_list.append(int(salesperson['total_sales']))
 
-    # for item in user_sales_list:
-    #     user_profile = UserProfile.objects.get(pk=item['user_profile'])
-    #     item['user_name'] = user_profile.user.username
-
     return salesperson_name_list, salesperson_value_list
 
 
