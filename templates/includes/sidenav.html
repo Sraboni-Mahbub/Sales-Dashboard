@@ -20,7 +20,7 @@
             </a>
           </li>
           <li class="nav-item">
-             {% if request.user.user_profile.role_type == "HOS" or request.user.user_profile.role_type == "CEO" %}
+             {% if request.user.user_profile.role_type == "HOS" %}
                 <a class="nav-link" href="{% url 'add_sale' %}">
                   <i class="fas fa-plus text-blue"></i>
                   <span class="nav-link-text"> Add Sale</span>

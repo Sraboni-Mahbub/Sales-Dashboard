@@ -82,7 +82,7 @@
                     <td>{{ user }}</td>
                     <td>{{ user.pin }}</td>
                     <td>{{ user.full_name }}</td>
-                    <td>{{ user.role_type }}</td>
+                    <td>{{ user.get_role_type_display }}</td>
                     <td>{{ user.job_title }}</td>
                     {% if request.user.user_profile.role_type == "HOS" %}
                         <td><a href="{% url 'update_user_info' user_id=user.id%}"><i class="fa fa-edit"></i> Update</a></td>

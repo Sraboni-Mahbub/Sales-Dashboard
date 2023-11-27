@@ -18,8 +18,8 @@ class UserProfile(models.Model):
     head_of_sales = models.ForeignKey(User, on_delete=models.CASCADE, related_name="head_of_sales", blank=True, null=True)
     pin = models.IntegerField(null=False, blank=False)
     role_choices = (
-            ("CEO", "CEO"),
-            ("HOS", "Head of Sales"),
+            ("CEO", "Management"),
+            ("HOS", "Sales Manager"),
             ("Salesperson", "Salesperson"),
 
     )

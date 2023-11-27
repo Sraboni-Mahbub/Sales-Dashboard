@@ -34,12 +34,18 @@ from django.http import JsonResponse
 #     return sales_by_category
 
 def salesperson_chart(request):
+    user = request.user
     end_date = datetime.now()
     start_date = end_date - timedelta(days=30)
+    if request.user.user_profile.role_type == "Salesperson":
+        user_sales = Sale.objects.filter(user_profile=user.user_profile,date__range=(start_date, end_date)).values(
+            'user_profile__full_name').annotate(
+            total_sales=Sum('sale_value')).order_by('user_profile__full_name')
 
-    user_sales = Sale.objects.filter(date__range=(start_date, end_date)).values(
-        'user_profile__full_name').annotate(
-        total_sales=Sum('sale_value')).order_by('user_profile__full_name')
+    else:
+        user_sales = Sale.objects.filter(date__range=(start_date, end_date)).values(
+            'user_profile__full_name').annotate(
+            total_sales=Sum('sale_value')).order_by('user_profile__full_name')
 
     user_sales_list = list(user_sales)
     salesperson_name_list = []
