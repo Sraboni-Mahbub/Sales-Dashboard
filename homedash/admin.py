@@ -7,18 +7,18 @@ class ProductsAdmin(admin.ModelAdmin):
     list_display = ('id','p_name', 'sales_category', 'price')
 
 class SalesAdmin(admin.ModelAdmin):
-    list_display = ('user_profile', 'product_ids', 'product_names', 'sale_value', 'remarks', 'date')
+    list_display = ('user_profile', 'product_id', 'product_name', 'sale_value', 'remarks', 'date')
     list_filter = ('user_profile', 'date')
-    search_fields = ('user_profile__user__username', 'product__p_name','product__id')
+    search_fields = ('user_profile__user__username', 'product__p_name', 'product__id')
 
-    def product_ids(self, obj):
-        return ', '.join([str(product.id) for product in obj.product.all()])
+    def product_id(self, obj):
+        return obj.product.id if obj.product else None
 
-    def product_names(self, obj):
-        return ', '.join([product.p_name for product in obj.product.all()])
+    def product_name(self, obj):
+        return obj.product.p_name if obj.product else None
 
-    product_ids.short_description = 'Product IDs'
-    product_names.short_description = 'Product Names'
+    product_id.short_description = 'Product ID'
+    product_name.short_description = 'Product Name'
 class LogTableAdmin(admin.ModelAdmin):
     list_display = ('user', 'actions', 'results', 'dateTime', 'description')
 

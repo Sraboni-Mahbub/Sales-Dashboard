@@ -13,14 +13,14 @@ class Products(models.Model):
         return self.p_name
 
 class Sale(models.Model):
-    product = models.ManyToManyField(Products, related_name="sale_product")
+    product = models.ForeignKey(Products,  on_delete=models.SET_NULL, related_name="sale_product", blank=True, null=True)
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="user_profile")
     sale_value = models.DecimalField(max_digits=10, decimal_places=2)
     remarks = models.CharField(max_length=50)
     date = models.DateTimeField()
 
     def __str__(self):
-        product_ids = ', '.join([str(product.id) for product in self.product.all()])
+        product_ids = ', '.join([str(product.id) for product in self.product.all()]) if self.product else 'None'
         return f"Product IDs: {product_ids}, Sale Value: {self.sale_value}, Remarks: {self.remarks}"
 
 class LogTable(models.Model):

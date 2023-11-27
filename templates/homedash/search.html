@@ -65,19 +65,23 @@
                     <th>Sale Value</th>
                     <th>Remarks</th>
                     <th>Date</th>
+                    {% if request.user.user_profile.role_type == "HOS" %}
+                         <th>Update</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
                 {% for result in results %}
                 <tr>
-                    <td>{% for product_ids in result.product.all %}
-                    {{ product_ids.id }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}</td>
-                    <td>{{ result.product.all|join:", " }}</td>
+                    <td>{{ result.product_id }}</td>
+                    <td>{{ result.product.p_name }}</td>
                     <td>{{ result.user_profile }}</td>
                     <td>{{ result.sale_value }}</td>
                     <td>{{ result.remarks }}</td>
                     <td>{{ result.date }}</td>
+                    {% if request.user.user_profile.role_type == "HOS" %}
+                        <td><a href="{% url 'update_sale' result.id %}"><i class="fa fa-edit"></i> Update</a></td>
+                    {% endif %}
                 </tr>
                 {% empty %}
                 <tr>

@@ -1,7 +1,7 @@
 {% extends 'layout/base.html' %}
 
 {% block stylesheets %}
-    <!-- Include Bootstrap CSS if not already included -->
+
 {% endblock stylesheets %}
 
 {% block content %}
@@ -22,7 +22,6 @@
         <tr>
             <th>SL.</th>
             <th>Type</th>
-            <th> </th>
             <th>Number of products</th>
             <th>view</th>
 
@@ -32,7 +31,6 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ category.type }}</td>
-                <td> </td>
                 <td>{{ category.product_count }}</td>
                 <td><a href="{% url 'view_category' category_id=category.id %}"><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
             </tr>
@@ -40,12 +38,9 @@
         </tbody>
     </table>
 
-    <!-- Modal for adding a category -->
     <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <!-- Add your form content here -->
-                <!-- Example: -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -53,8 +48,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Your category form content goes here -->
-                    <!-- Example: -->
                     <form method="post" class="form">
                         {% csrf_token %}
                          <div id="div_id type" class="form-group">

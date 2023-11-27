@@ -557,6 +557,7 @@ var BarsChart = (function() {
 
 })();
 
+
 'use strict';
 
 'use strict';

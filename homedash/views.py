@@ -26,6 +26,13 @@ from django.http import JsonResponse
 
 
 # Sales person chart
+# def category_chart():
+#     sales_by_category= SalesCategory.objects.annotate(
+#         total_sale_value=Sum('sales_category_products__sale_product__sale_value')
+#     ).values('type', 'total_sale_value')
+#
+#     return sales_by_category
+
 def salesperson_chart(request):
     end_date = datetime.now()
     start_date = end_date - timedelta(days=30)
@@ -42,8 +49,6 @@ def salesperson_chart(request):
         salesperson_value_list.append(int(salesperson['total_sales']))
 
     return salesperson_name_list, salesperson_value_list
-
-
 def Salesperson_sale(request):
     user = request.user
     current_month = datetime.now().month
@@ -61,8 +66,6 @@ def Salesperson_sale(request):
         monthly_sale_data[month_index] = int(entry['total_sale'])
 
     return month_list, monthly_sale_data
-
-
 # CHART
 def get_chart_data():
     monthly_sales = Sale.objects.annotate(
@@ -76,8 +79,6 @@ def get_chart_data():
         monthly_sales_list[data['month'].month - 1] = (int(data['total_sales']))
 
     return month_list, monthly_sales_list
-
-
 # MONTHLY REVENUE
 def monthly_revenue():
     last_thirty_days = datetime.now() - timedelta(days=30)
@@ -88,8 +89,6 @@ def monthly_revenue():
     total_sales_value_formatted = locale.format_string("%d", total_sales_value, grouping=True)
 
     return total_sales_value_formatted
-
-
 # YEARLY REVENUE
 def yearly_revenue():
     current_year = datetime.now().year
@@ -102,8 +101,6 @@ def yearly_revenue():
     total_annual_sales_formatted = locale.format_string("%d", total_annual_sales_value, grouping=True)
 
     return total_annual_sales_formatted
-
-
 # NUMBER OF SALES
 def number_of_sales():
     last_thirty_sales = datetime.now() - timedelta(days=30)
@@ -122,8 +119,6 @@ def number_of_sales():
 
     average_entries = total_entries / total_months if total_months > 0 else 0
     return last_30_days_count, average_entries
-
-
 # SHOW BUDGET
 def show_budget():
     current_date = datetime.now()
@@ -148,6 +143,9 @@ def home(request):
     last_30_days_count, average_entries = number_of_sales()
     current_month_budget, total_budget = show_budget()
     sales_person_name_list, sales_person_value_list = salesperson_chart(request)
+    # sales_by_category = category_chart()
+    # print(sales_by_category)
+
 
     month_list, monthly_sales_list_s = Salesperson_sale(request)
 
@@ -229,7 +227,7 @@ def add_sale(request):
         sale_value = request.POST.get('sale_value')
         remarks = request.POST.get('remarks')
 
-        selected_products = Products.objects.filter(id__in=product_ids)
+        selected_products = Products.objects.get(id__in=product_ids)
         user_profile = UserProfile.objects.get(user__username=username)
 
         new_sale = Sale.objects.create(
@@ -239,7 +237,9 @@ def add_sale(request):
             date=datetime.now()
         )
 
-        new_sale.product.set(selected_products)
+        new_sale.product = selected_products
+        new_sale.save()
+
 
         return redirect('add_sale')
 
@@ -278,3 +278,30 @@ def search(request):
         results = Sale.objects.filter(query).order_by('-date')
 
     return render(request, 'homedash/search.html', {'results': results})
+
+
+
+@login_required(login_url='/authenticate/login/')
+def update_sale(request, sale_id):
+    sale = Sale.objects.get(pk=sale_id)
+    if request.method == 'POST':
+        #sale.product_ids = request.POST.getlist('product')
+        username = request.POST.get('username')
+        user_profile = UserProfile.objects.get(user__username=username)
+        sale.user_profile = user_profile
+
+        sale.sale_value = request.POST.get('sale_value')
+        sale.remarks = request.POST.get('remarks')
+
+        selected_product_id = request.POST.get('product')
+        product_instance = get_object_or_404(Products, id=selected_product_id)
+        sale.product = product_instance
+
+        sale.save()
+        return redirect('search')
+
+    user_profiles = UserProfile.objects.all()
+    all_products = Products.objects.all()
+
+
+    return render(request, 'homedash/update_sale.html', {'sale': sale, 'user_profiles': user_profiles, 'all_products': all_products})

@@ -10,31 +10,31 @@
                 {% csrf_token %}
                 <div id="div_id username" class="form-group">
                     <div class="">
-                        <input type="text" placeholder="Username" id="username" class="textinput textInput select form-control" name="username" required>
+                        <input type="text" placeholder="Username" id="username" class="textinput textInput select form-control" name="username" value="{{ sale.user_profile }}">
                     </div>
                 </div>
                 <div id="div_id_cs" class="form-group">
                     <div class="">
                          <label for="product">Select Products:</label>
                           <select id="product" name="product" class="form-control">
-                            {% for product in products %}
-                              <option value="{{ product.id }}">{{ product.p_name }}</option>
+                            {% for product in all_products %}
+                              <option value="{{ product.id }}" {% if sale.product.id ==  product.id %} selected {% endif %}>{{ product }}</option>
                             {% endfor %}
                           </select>
                     </div>
                 </div>
                 <div id="div_id item" class="form-group">
                     <div class="">
-                        <input type="text" placeholder="Sale Value" id="sale_value" class="textinput textInput select form-control" name="sale_value" required>
+                        <input type="text" placeholder="Sale Value" id="sale_value" class="textinput textInput select form-control" name="sale_value" value="{{ sale.sale_value }}">
                     </div>
                 </div>
                 <div id="div_id remark" class="form-group">
                     <div class="">
-                        <textarea id="remarks" placeholder="Remarks" name="remarks" class="textinput textInput select form-control" rows="3" required></textarea>
+                        <textarea id="remarks" placeholder="Remarks" name="remarks" class="textinput textInput select form-control" rows="3">{{ sale.remarks }}</textarea>
                     </div>
                 </div>
                 <div class="footer">
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
