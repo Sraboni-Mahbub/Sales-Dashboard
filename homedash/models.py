@@ -20,8 +20,8 @@ class Sale(models.Model):
     date = models.DateTimeField()
 
     def __str__(self):
-        product_ids = ', '.join([str(product.id) for product in self.product.all()]) if self.product else 'None'
-        return f"Product IDs: {product_ids}, Sale Value: {self.sale_value}, Remarks: {self.remarks}"
+        product_id = self.product.id if self.product else 'None'
+        return f"Product ID: {product_id}, Sale Value: {self.sale_value}, Remarks: {self.remarks}"
 
 class LogTable(models.Model):
     user = models.CharField(max_length=50)

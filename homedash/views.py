@@ -26,12 +26,12 @@ from django.http import JsonResponse
 
 
 # Sales person chart
-# def category_chart():
-#     sales_by_category= SalesCategory.objects.annotate(
-#         total_sale_value=Sum('sales_category_products__sale_product__sale_value')
-#     ).values('type', 'total_sale_value')
-#
-#     return sales_by_category
+def category_chart():
+    sales_by_category= SalesCategory.objects.annotate(
+        total_sale_value=Sum('sales_category_products__sale_product__sale_value')
+    ).values('type', 'total_sale_value')
+
+    return sales_by_category
 
 def salesperson_chart(request):
     user = request.user
@@ -55,6 +55,8 @@ def salesperson_chart(request):
         salesperson_value_list.append(int(salesperson['total_sales']))
 
     return salesperson_name_list, salesperson_value_list
+
+#Chart for salesperson
 def Salesperson_sale(request):
     user = request.user
     current_month = datetime.now().month
@@ -72,6 +74,7 @@ def Salesperson_sale(request):
         monthly_sale_data[month_index] = int(entry['total_sale'])
 
     return month_list, monthly_sale_data
+
 # CHART
 def get_chart_data():
     monthly_sales = Sale.objects.annotate(
@@ -85,6 +88,7 @@ def get_chart_data():
         monthly_sales_list[data['month'].month - 1] = (int(data['total_sales']))
 
     return month_list, monthly_sales_list
+
 # MONTHLY REVENUE
 def monthly_revenue():
     last_thirty_days = datetime.now() - timedelta(days=30)
@@ -95,6 +99,7 @@ def monthly_revenue():
     total_sales_value_formatted = locale.format_string("%d", total_sales_value, grouping=True)
 
     return total_sales_value_formatted
+
 # YEARLY REVENUE
 def yearly_revenue():
     current_year = datetime.now().year
@@ -107,6 +112,8 @@ def yearly_revenue():
     total_annual_sales_formatted = locale.format_string("%d", total_annual_sales_value, grouping=True)
 
     return total_annual_sales_formatted
+
+
 # NUMBER OF SALES
 def number_of_sales():
     last_thirty_sales = datetime.now() - timedelta(days=30)
@@ -125,6 +132,7 @@ def number_of_sales():
 
     average_entries = total_entries / total_months if total_months > 0 else 0
     return last_30_days_count, average_entries
+
 # SHOW BUDGET
 def show_budget():
     current_date = datetime.now()
@@ -149,8 +157,8 @@ def home(request):
     last_30_days_count, average_entries = number_of_sales()
     current_month_budget, total_budget = show_budget()
     sales_person_name_list, sales_person_value_list = salesperson_chart(request)
-    # sales_by_category = category_chart()
-    # print(sales_by_category)
+    sales_by_category = category_chart()
+    print(sales_by_category)
 
 
     month_list, monthly_sales_list_s = Salesperson_sale(request)
@@ -189,7 +197,7 @@ def sales_category(request):
 
 @login_required(login_url='/authenticate/login/')
 def delete_sales_category(request, category_id):
-    print(SalesCategory.objects.get(pk=category_id))
+    SalesCategory.objects.get(pk=category_id)
 
     SalesCategory.objects.get(pk=category_id).delete()
     return redirect('sales_category')

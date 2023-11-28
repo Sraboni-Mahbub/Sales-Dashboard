@@ -24,6 +24,9 @@
             <th>Type</th>
             <th>Number of products</th>
             <th>view</th>
+            {% if request.user.user_profile.role_type == "HOS" %}
+                <th>actions</th>
+            {% endif %}
 
         </thead>
         <tbody>
@@ -33,6 +36,9 @@
                 <td>{{ category.type }}</td>
                 <td>{{ category.product_count }}</td>
                 <td><a href="{% url 'view_category' category_id=category.id %}"><i class="fa fa-eye" aria-hidden="true"></i> view</a></td>
+                {% if request.user.user_profile.role_type == "HOS" %}
+                    <td><a href="{% url 'delete_sales_category' category_id=category.id %}"><i class="fas fa-trash ml-1">Delete</i></a></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
