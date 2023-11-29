@@ -298,8 +298,8 @@ def search(request):
 @login_required(login_url='/authenticate/login/')
 def update_sale(request, sale_id):
     sale = Sale.objects.get(pk=sale_id)
+
     if request.method == 'POST':
-        #sale.product_ids = request.POST.getlist('product')
         username = request.POST.get('username')
         user_profile = UserProfile.objects.get(user__username=username)
         sale.user_profile = user_profile
