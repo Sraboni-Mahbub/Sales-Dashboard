@@ -28,6 +28,14 @@
              {% endif %}
           </li>
           <li class="nav-item">
+             {% if request.user.user_profile.role_type == "HOS" %}
+                <a class="nav-link" href="{% url 'add_budget' %}">
+                  <i class="fas fa-solid fa-dollar-sign"></i>
+                  <span class="nav-link-text"> Add Budget</span>
+                </a>
+             {% endif %}
+          </li>
+          <li class="nav-item">
            {% if request.user.user_profile.role_type == "HOS" or request.user.user_profile.role_type == "CEO" %}
               <a class="nav-link" href="{% url 'user' %}">
                 <i class="ni ni-circle-08 text-pink"></i>
@@ -56,3 +64,4 @@
     </div>
   </div>
 </nav>
+

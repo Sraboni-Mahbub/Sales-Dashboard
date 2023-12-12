@@ -1,0 +1,49 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<div class="col-xl-12">
+    <div class="create_up">
+        <h3> Add Budget </h3>
+        <hr>
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+
+            <div class="col-md-2">
+                <label for="fiscal_year" class="form-label">Fiscal Year:</label>
+                <input type="text" name="fiscal_year" id="fiscal_year" class="form-control" required>
+            </div>
+
+            <div class="col-md-2">
+                <label for="month" class="form-label">Month:</label>
+                <select name="month" id="month" class="textinput textInput select form-control" required>
+                    <option value="">---------</option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label for="budget" class="form-label">Budget:</label>
+                <input type="text" name="budget" id="budget" class="form-control" required>
+            </div>
+
+            <div class="col-md-2" style="margin-left: 10px; margin-top: 35px;">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

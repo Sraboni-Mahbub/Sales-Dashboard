@@ -137,7 +137,7 @@ def number_of_sales():
 def show_budget():
     current_date = datetime.now()
     current_month = current_date.strftime('%B')
-    fiscal_year = current_date.year  # Assuming fiscal year starts in January
+    fiscal_year = current_date.year
 
     current_month_budget = InfoTable.objects.filter(month=current_month, fiscal_year=fiscal_year).first()
     records_in_fiscal_year = InfoTable.objects.filter(fiscal_year=fiscal_year)
@@ -317,5 +317,28 @@ def update_sale(request, sale_id):
     user_profiles = UserProfile.objects.all()
     all_products = Products.objects.all()
 
-
     return render(request, 'homedash/update_sale.html', {'sale': sale, 'user_profiles': user_profiles, 'all_products': all_products})
+
+
+@login_required(login_url='/authenticate/login/')
+def add_budget(request):
+    if request.method == 'POST':
+        fiscal_year = request.POST.get('fiscal_year')
+        month = request.POST.get('month')
+        budget = request.POST.get('budget')
+
+        info_entry = InfoTable.objects.create(
+            fiscal_year=fiscal_year,
+            month=month,
+            budget=budget
+        )
+
+        info_entry.save()
+        return redirect('add_budget')
+
+        # Pass month choices to the template
+    month_choices = InfoTable._meta.get_field('month').choices
+
+    info_table = InfoTable.objects.all()
+
+    return render(request, 'homedash/add_budget.html', {'info_table':info_table, 'month_choices': month_choices})

@@ -11,21 +11,28 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5br^_j(*4e8%x0o(1uo(s87b8$$pv)p8i&-ir7662!x15rn&zp'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 from pathlib import Path
-import os
 from django.contrib.messages import constants as messages
+
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-secondary',
     messages.INFO: 'alert-info',
@@ -34,13 +41,11 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-
 ALLOWED_HOSTS = ['*']
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
-
 
 # Application definition
 
@@ -88,7 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'salesdashboard.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -102,7 +106,6 @@ DATABASES = {
         'PORT': '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -122,7 +125,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -134,7 +136,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -142,7 +143,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR]
 # STATIC_ROOT = BASE_DIR / 'static'
 
-#Media
+# Media
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
@@ -150,14 +151,13 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-#EMAIL CONFIGURATION
+# EMAIL CONFIGURATION
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'srabonibracnet@gmail.com'
 EMAIL_HOST_PASSWORD = 'apnjptkkdwsdbtea'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -167,6 +167,3 @@ GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
-
-
-
