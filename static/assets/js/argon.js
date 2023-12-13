@@ -555,6 +555,34 @@ var BarsChart = (function() {
 		initChart($chart);
 	}
 
+
+
+	var $chart2 = $('#chart-bars2');
+	// Init chart
+	function initChart2($chart2) {
+
+		// Create chart
+		var categoryChart = new Chart($chart2, {
+			type: 'bar',
+			data: {
+				labels:  salespcategory_type,
+				datasets: [{
+					label: 'Sales',
+					data:  salespcategory_value
+				}]
+			}
+		});
+
+		// Save to jQuery object
+		$chart2.data('chart2', categoryChart);
+	}
+
+
+	// Init chart
+	if ($chart2.length) {
+		initChart2($chart2);
+	}
+
 })();
 
 

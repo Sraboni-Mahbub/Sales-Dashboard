@@ -188,49 +188,6 @@
   <script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
 
 
-<script>
-  'use strict';
-
-  var BarsChart = (function() {
-
-	//
-	// Variables
-	//
-
-	var $chart = $('#chart-bars2');
-
-
-	//
-	// Methods
-	//
-
-	// Init chart
-	function initChart($chart) {
-
-		// Create chart
-		var ordersChart = new Chart($chart, {
-			type: 'bar',
-			data: {
-				labels: sales_person_name_list,
-				datasets: [{
-					label: 'Sales',
-					data: sales_person_value_list
-				}]
-			}
-		});
-
-		// Save to jQuery object
-		$chart.data('chart', ordersChart);
-	}
-
-
-	// Init chart
-	if ($chart.length) {
-		initChart($chart);
-	}
-
-})();
-</script>
 
 <script>
 
@@ -598,6 +555,9 @@ var Charts = (function() {
 })();
 let sales_person_value_list = {{sales_person_value_list|safe}}
 let sales_person_name_list = {{sales_person_name_list|safe}}
+
+let salespcategory_type = {{salespcategory_type|safe}}
+let salespcategory_value = {{salespcategory_value|safe}}
 </script>
 
 {% endblock javascripts %}

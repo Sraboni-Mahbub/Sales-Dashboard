@@ -31,7 +31,14 @@ def category_chart():
         total_sale_value=Sum('sales_category_products__sale_product__sale_value')
     ).values('type', 'total_sale_value')
 
-    return sales_by_category
+    sales_by_category_list = list(sales_by_category)
+    salescategory_type= []
+    salespcategory_value = []
+    for category in sales_by_category_list:
+        salescategory_type.append(category['type'])
+        salespcategory_value.append(int(category['total_sale_value']))
+
+    return  salescategory_type, salespcategory_value
 
 def salesperson_chart(request):
     user = request.user
@@ -157,8 +164,11 @@ def home(request):
     last_30_days_count, average_entries = number_of_sales()
     current_month_budget, total_budget = show_budget()
     sales_person_name_list, sales_person_value_list = salesperson_chart(request)
-    sales_by_category = category_chart()
-    print(sales_by_category)
+    salespcategory_type, salespcategory_value = category_chart()
+    # print(category_name_list)
+    # print(category_sales)
+    print(salespcategory_type)
+    print(salespcategory_value)
 
 
     month_list, monthly_sales_list_s = Salesperson_sale(request)
@@ -173,7 +183,10 @@ def home(request):
         'prev_12_month': prev_12_month,
         'monthly_sales_list': monthly_sales_list,
         'sales_person_name_list': sales_person_name_list,
-        'sales_person_value_list': sales_person_value_list
+        'sales_person_value_list': sales_person_value_list,
+        'salespcategory_type': salespcategory_type,
+        'salespcategory_value': salespcategory_value
+        # 'category_name_list': category_name_list
 
     }
     return render(request, 'homedash/index.html', context)
