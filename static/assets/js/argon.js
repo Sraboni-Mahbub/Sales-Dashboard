@@ -627,29 +627,29 @@ var Datepicker = (function() {
 
 var noUiSlider = (function() {
 
-	// Variables
+	 Variables
 
-	// var $sliderContainer = $('.input-slider-container'),
-	// 		$slider = $('.input-slider'),
-	// 		$sliderId = $slider.attr('id'),
-	// 		$sliderMinValue = $slider.data('range-value-min');
-	// 		$sliderMaxValue = $slider.data('range-value-max');;
+	 var $sliderContainer = $('.input-slider-container'),
+	 		$slider = $('.input-slider'),
+	 		$sliderId = $slider.attr('id'),
+	 		$sliderMinValue = $slider.data('range-value-min');
+	 		$sliderMaxValue = $slider.data('range-value-max');;
 
 
-	// // Methods
-	//
-	// function init($this) {
-	// 	$this.on('focus blur', function(e) {
-  //       $this.parents('.form-group').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
-  //   }).trigger('blur');
-	// }
-	//
-	//
-	// // Events
-	//
-	// if ($input.length) {
-	// 	init($input);
-	// }
+	 // Methods
+
+	 function init($this) {
+	 	$this.on('focus blur', function(e) {
+         $this.parents('.form-group').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
+     }).trigger('blur');
+	 }
+
+
+	 // Events
+
+	 if ($input.length) {
+	 	init($input);
+	 }
 
 
 

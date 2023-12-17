@@ -167,8 +167,8 @@ def home(request):
     salespcategory_type, salespcategory_value = category_chart()
     # print(category_name_list)
     # print(category_sales)
-    print(salespcategory_type)
-    print(salespcategory_value)
+    # print(salespcategory_type)
+    # print(salespcategory_value)
 
 
     month_list, monthly_sales_list_s = Salesperson_sale(request)
