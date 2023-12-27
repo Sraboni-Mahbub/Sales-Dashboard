@@ -1,0 +1,16 @@
+*.pyc
+__pycache__/
+media/
+migrations/
+static_assets/
+db.sqlite3
+#khamariTechnians/local_settings.py
+Project_Default.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/
+env
+bot_images/
+logo/
+pdfs/
+.env
