@@ -63,7 +63,7 @@ def salesperson_chart(request):
 
     return salesperson_name_list, salesperson_value_list
 
-#Chart for salesperson
+# Chart for salesperson
 def Salesperson_sale(request):
     user = request.user
     current_month = datetime.now().month
@@ -171,7 +171,7 @@ def home(request):
     # print(salespcategory_value)
 
 
-    month_list, monthly_sales_list_s = Salesperson_sale(request)
+    # month_list, monthly_sales_list_s = Salesperson_sale(request)
 
     context = {
         'total_sales_value': total_sales_value_formatted,
@@ -332,7 +332,6 @@ def update_sale(request, sale_id):
 
     return render(request, 'homedash/update_sale.html', {'sale': sale, 'user_profiles': user_profiles, 'all_products': all_products})
 
-
 @login_required(login_url='/authenticate/login/')
 def add_budget(request):
     if request.method == 'POST':
@@ -354,4 +353,5 @@ def add_budget(request):
 
     info_table = InfoTable.objects.all()
 
-    return render(request, 'homedash/add_budget.html', {'info_table':info_table, 'month_choices': month_choices})
+    return render(request, 'homedash/add_budget.html', {'info_table': info_table, 'month_choices': month_choices})
+

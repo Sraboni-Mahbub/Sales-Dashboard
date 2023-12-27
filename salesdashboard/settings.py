@@ -61,6 +61,9 @@ INSTALLED_APPS = [
     'homedash',
     'crispy_bootstrap4',
     'django_extensions',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -167,3 +170,4 @@ GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
+
