@@ -41,8 +41,32 @@
             <div class="col-md-2" style="margin-left: 10px; margin-top: 35px;">
                 <button class="btn btn-primary" type="submit">Search</button>
             </div>
-
         </form>
+
+        <h3 class="mt-4">Monthly budget</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fiscal year</th>
+                    <th>Month</th>
+                    <th>Budget</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for info_table in info_table %}
+                <tr>
+                    <td>{{ info_table.fiscal_year }}</td>
+                    <td>{{ info_table.month }}</td>
+                    <td>{{ info_table.budget }}</td>
+                    {% if request.user.user_profile.role_type == "HOS" %}
+                        <td><a href="#"><i class="fa fa-trash ml-1"></i> Delete</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 

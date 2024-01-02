@@ -272,7 +272,7 @@ def add_sale(request):
 
     else:
         products = Products.objects.all()
-        user_profiles = UserProfile.objects.all()
+        user_profiles = UserProfile.objects.filter(role_type='Salesperson')
 
     return render(request, 'homedash/add_sale.html', {'products': products, 'user_profiles': user_profiles})
 
@@ -339,14 +339,18 @@ def add_budget(request):
         month = request.POST.get('month')
         budget = request.POST.get('budget')
 
-        info_entry = InfoTable.objects.create(
-            fiscal_year=fiscal_year,
-            month=month,
-            budget=budget
-        )
+        if InfoTable.objects.filter(fiscal_year=fiscal_year, month=month).exists():
+            messages.error(request,"Month already exists")
 
-        info_entry.save()
-        return redirect('add_budget')
+        else:
+            info_entry = InfoTable.objects.create(
+                fiscal_year=fiscal_year,
+                month=month,
+                budget=budget
+            )
+
+            info_entry.save()
+            return redirect('add_budget')
 
         # Pass month choices to the template
     month_choices = InfoTable._meta.get_field('month').choices

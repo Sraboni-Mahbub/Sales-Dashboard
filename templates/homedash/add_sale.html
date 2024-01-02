@@ -8,11 +8,21 @@
             <hr>
             <form method="post" class="form">
                 {% csrf_token %}
-                <div id="div_id username" class="form-group">
-                    <div class="">
-                        <input type="text" placeholder="Username" id="username" class="textinput textInput select form-control" name="username" required>
+                    <div id="div_id username" class="form-group">
+                        <div class="">
+                            <label for="username">Username</label>
+                            <select id="username" name="username" class="form-control">
+                                {% for user in user_profiles %}
+                                    <option value="{{ user.user }}">{{ user.user }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
-                </div>
+<!--                <div id="div_id username" class="form-group">-->
+<!--                    <div class="">-->
+<!--                        <input type="text" placeholder="Username" id="username" class="textinput textInput select form-control" name="username" required>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div id="div_id_cs" class="form-group">
                     <div class="">
                          <label for="product">Select Products:</label>

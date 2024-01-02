@@ -141,10 +141,10 @@ def profile(request):
             if profile_picture:
                 user_profile.profile_picture = profile_picture
             else:
-                user_profile.profile_picture = None  # Clear the profile picture
+                user_profile.profile_picture = None
 
             user_profile.save()
-            return redirect('profile')  # Replace 'profile' with the URL name for the user's profile page
+            return redirect('profile')
     else:
         form = ProfilePictureForm(instance=user_profile)
 
@@ -171,3 +171,4 @@ def edit_profile(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
